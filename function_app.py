@@ -26,7 +26,7 @@ def QueueTriggerFunctionActivateAccount(azqueue: func.QueueMessage):
     try:
         logging.info(f"Sending request to get activation code for {body}")
         response = requests.post(
-            f"http://localhost:8000/user/{body}/code",
+            f"https://api-commette-dev.azurewebsites.net//user/{body}/code",
             headers={"Authorization": SECRET_KEY_FUNC}
         )
         response.raise_for_status()
@@ -34,7 +34,7 @@ def QueueTriggerFunctionActivateAccount(azqueue: func.QueueMessage):
         logging.info(f"Received activation code for {body}")
 
         message = MIMEText(f"Your activation code is: {code}")
-        message['Subject'] = 'Test Email'
+        message['Subject'] = 'Commette Activation Code'
         message['From'] = sender
         message['To'] = body
 
